@@ -4,8 +4,10 @@
 
 // 'Fb7JWGH2Nkrd3DT';
 
-const { DB_HOST } = require('./config');
-
+// const { DB_HOST } = require('./config');
+const dotenv = require('dotenv');
+dotenv.config();
+const { DB_HOST } = process.env;
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
@@ -20,6 +22,7 @@ app.use('/api/contacts', contactsRouter);
 
 mongoose
 	.connect(DB_HOST)
+	.then(() => console.log('Database connect'))
 	.then(() => app.listen(3000))
 	.catch((err) => {
 		console.log(err.message);
