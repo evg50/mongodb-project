@@ -4,14 +4,23 @@
 
 // 'Fb7JWGH2Nkrd3DT';
 
-const DB_HOST =
-	'mongodb+srv://m0984401807:Fb7JWGH2Nkrd3DT@cluster0.vkivpag.mongodb.net/online_shop?retryWrites=true&w=majority';
+const { DB_HOST } = require('./config');
 
 const mongoose = require('mongoose');
+const express = require('express');
+const cors = require('cors');
+const contactsRouter = require('./routes/api/contacts');
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+app.use('/api/contacts', contactsRouter);
 
 mongoose
 	.connect(DB_HOST)
-	.then(() => console.log('database connect'))
+	.then(() => app.listen(3000))
 	.catch((err) => {
 		console.log(err.message);
 		process.exit(1);
